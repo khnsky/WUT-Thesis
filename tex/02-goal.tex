@@ -1,0 +1,74 @@
+\clearpage % Rozdziały zaczynamy od nowej strony.
+
+\section{Goal}
+
+The aim of this work is to achieve a way of running PenPoint OS on a modern
+hardware with performance that would make possible to use in a comfortable
+manner.  It should be possible to use a mouse, a graphics tablet or a touch
+screen for pointing.  This work could be then further used for purposes of
+digital preservation of the PenPoint Operating System.
+
+%\subsection{Prior Art}
+
+\clearpage
+
+\section{Prior Art}
+
+% - not popular, not much activity, forgotten system
+% - strategies: QEMU, DOSBox, VirtualBox
+% - difficult to do - special hardware, documentation lost (of hardware)
+% - only ___ Schubiger
+% - remaking of the Schubiger solution
+
+% - forgotten system
+% - no interest
+% - only schubiger
+% -
+% - difficulty with PPOS
+% - multiple versions
+% - hardware
+% - lost documentation
+% -
+% - strategies
+% - rewrite
+% - compatibility layer (wine)
+% - emulator
+% - VB, QEMU
+% -
+% - schubiger solution
+% -
+% - remaking of schubiger solution
+
+Unfortunately there is not much interest in the revival oft the PenPoint
+operating system.  Sadly it is pretty much a forgotten system.  The only other
+effort I came across that was dedicated to making PenPoint accessible and
+usable again was the project of professor Simon Schubiger.
+
+What makes this task difficult is how many different version of PenPoint there
+were.  PenPoint OS was released for a variety of computers, and most of them
+had some special, rather unique components.  To make it worse, a lot of
+information about that specific hardware is probably lost to time; whats more
+so are the copies of PenPoint installation media for many of these devices.
+
+There are many possible strategies when it comes to making software accessible
+for a platform that this software was not intended for originally.  Sometimes
+it is possible to modify parts of the source code to port it or even rewrite
+the whole thing from scratch if preferable and necessary.  This is almost
+always not possible and not feasible.  When the source and destination
+platforms are similar enough some sort of compatibility layer can be used.
+Wine works this way to allow running Windows applications on Unix-like systems.
+However the most popular and versatile tool for this task is an emulator.
+There is a great deal of variety in the available emulators, many of them aim
+to solve different, sometimes contradictory problems.  The two most popular
+open-source and libre emulators are QEMU and VirtualBox.  The goals of the
+former is performance, the goals of the latter is compatibility and best
+possible experience out of the box.
+
+Professor Simon Schubiger chose the JPC emulator.  The JPC emulator is
+a relatively simple emulator, especially compared to such programs as QEMU, and
+it is written in Java.  These features made it easy to create a runnable proof
+of concept implementation that allowed to access PenPoint OS.  Unfortunately it
+was not good enough for actual usage.  It was, however, a starting point.  In
+the following sections I will describe in greater detail what JPC is, the
+modifications created by professor Simon Schubiger, and the attempt to recreate
+the running PenPoint solution and port it to QEMU.

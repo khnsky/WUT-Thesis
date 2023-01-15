@@ -1,0 +1,42 @@
+\clearpage % Rozdziały zaczynamy od nowej strony.
+
+\section{Summary}
+
+The goal of this work was to run PenPoint OS on a modern computer with
+reasonable performance, and be able to use it with the help of a mouse,
+a graphics tablet or a touchscreen. PenPoint was an important and influential
+albeit now mostly forgotten piece of computing history. It is important to
+preserve it and at the same time maybe gain a little insight.
+
+The first approach consisted of trying to port modifications of the JPC
+emulator created by professor Simon Schubiger to the QEMU hypervisor. The JPC
+emulator was not performant enough to run PenPoint OS at a speed that would be
+comfortable to use. First the changes to the JPC emulator required to run
+PenPoint were discussed in detail: what they do, how they do it, and how all of
+this relates to the general architecture of the JPC. Then the operation of the
+QEMU hypervisor, the process of defining a new device in the QEMU source tree
+and making it available to QEMU, and the reasoning behind choosing QEMU were
+described in depth. This approach however was abandoned because of the
+complexity and because an easier way became available.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{penpoint-pc-tablet.png}
+    \caption{PenPoint OS running on PC with a graphics tablet}
+    \label{fig:penpoint-pc-tablet}
+\end{figure}
+
+In the second approach a different distribution of PenPoint OS was used, one
+that was created so that it could be installed on a PC running MS-DOS. Here the
+process of obtaining the installation files, the installation, and
+configuration of the DOS environment created using FreeDOS, and of PenPoint is
+described. First it was described how the SDK distribution of PenPoint differs
+from the version created for the NCR 3125. Then it was shown how the floppy
+disk files ought to be prepared to be used with a virtual machine, and the
+process of installation was explained. Finally it was demonstrated how to
+configure the FreeDOS environment to run PenPoint OS and how to configure
+PenPoint OS itself to work with a mouse. The difference between a relative and
+absolute pointing device was discussed as well, how it works in both QEMU and
+VirtualBox, and what was tried and what should be done in QEMU to support an
+absolute pointing device like a graphics tablet.
+

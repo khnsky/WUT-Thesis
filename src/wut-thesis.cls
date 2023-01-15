@@ -56,6 +56,9 @@
 \RequirePackage{url}           % URL-sensitive line breaks
 \RequirePackage{xspace}        % Remove duplicated spaces
 
+%\usepackage{subcaption}
+\RequirePackage{subcaption}
+
 %----------------------------
 % Parametrized dependencies
 %----------------------------
@@ -82,7 +85,8 @@
     right=25mm,
     top=25mm,
     bottom=25mm,
-    bindingoffset=\wutbindingoffset
+    bindingoffset=\wutbindingoffset,
+%    showframe,
 ]{geometry}
 % Clickable hyperlinks
 \RequirePackage{hyperref}
@@ -98,6 +102,8 @@
     protrusion=true,
     expansion=true
 ]{microtype}
+
+\RequirePackage{float}
 
 %-----------------------
 % LuaTeX specific code
@@ -484,3 +490,18 @@
     \standardappendix
     \renewcommand{\thesection}{\arabic{section}}
 }
+
+%\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
+%\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+%\newcommand\subsubsubsection{\@startsection{paragraph}{4}{\z@}%
+%            {-2.5ex\@plus -1ex \@minus -.25ex}%
+%            {1.25ex \@plus .25ex}%
+%            {\normalfont\normalsize\bfseries}}
+% https://tex.stackexchange.com/a/569249
+\newcommand\subsubsubsection{\@startsection{paragraph}{4}{\z@}%
+    {-2.5ex\@plus -1ex \@minus -.25ex}
+    {1.25ex \@plus .25ex}
+    {\normalfont\normalsize\bfseries}}
+%\makeatother
+\setcounter{secnumdepth}{4} % how many sectioning levels to assign numbers to
+\setcounter{tocdepth}{4}    % how many sectioning levels to show in ToC

@@ -1,0 +1,23 @@
+\clearpage % Rozdziały zaczynamy od nowej strony.
+
+\section{Conclusions and further work}
+
+The original goal of running PenPoint OS on modern hardware was met by using
+the SDK distribution of PenPoint and installing it on FreeDOS in VirtualBox:
+
+\begin{itemize}
+    \item
+        It is possible to run PenPoint on any computer that can run VirtualBox
+    \item
+        The performance of this solution is excellent
+    \item
+        It is possible to use a graphics tablet or a touch screen as a pointing
+        device
+\end{itemize}
+
+Potential improvements include modifying source code of QEMU so that absolute
+pointing methods work with it correctly, and porting the changes to JPC
+emulator created by professor Schubiger to either VirtualBox or QEMU to run the
+PenPoint OS version for NCR System 3125 - the flagship PenPoint device - with
+all of its bells and whistles.
+

@@ -1,0 +1,502 @@
+\clearpage % Rozdziały zaczynamy od nowej strony.
+
+\section{Running PenPointOS on FreeDOS}
+
+In this second part I will explain what FreeDOS and PenPointOS SDK are, and how
+to install and run the PenPointOS version intended for developers. Using this
+version of PenPoint OS was made possible after one of the commenters on
+professor Schubiger original PenPointOS video found the installation media
+files hosted on a site dedicated to archiving computer history.
+
+In these following sections I will outline the steps to installing the
+PenPointOS version for MS-DOS, and running on QEMU in FreeDOS.
+
+\subsection{PenPoint for DOS}
+
+The creators of PenPointOS knew that users would not choose their operating
+system over an established solution, even if it was a better product, had there
+not been software written for it. That is why making the barrier to entry for
+developers as low as possible, and making them productive as fast as possible
+was one of the goals Robert Carr, the architect of PenPoint, outlined as a key
+requirement in the book ``The Power of PenPoint'' \cite{carr1991}. The creators
+also knew that programmers would not be able or eager to invest in new devices.
+That is why the PenPointOS Software Development Kit included a version of
+PenPointOS that could be installed on compatible desktop PCs running MS-DOS.
+
+\subsection{What is FreeDOS}
+
+FreeDOS is a free and libre open source operating system licensed under GPL. It
+is intended to be fully compatible with MS-DOS environment and is designed to
+run well in a virtual machine. FreeDOS has a thriving community. There is
+original development of new software, and there programs ported from other
+platforms. And everything is well documented.  FreeDOS is easier to use and
+much more accessible than the original DOS.  There is even a package manager.
+All of those reasons make it a good pick to use for the purposes of running
+PenPoint OS.
+
+\subsection{Obtaining the files}
+
+After downloading the files from the bitsavers website the eight floppy disk
+images need to be converted in order for them to be used. The .IMD files were
+created using a DOS program ImageDisk used to backup floppies. These however
+cannot be used with QEMU as the format is not supported. In order for them to
+be readable to QEMU these must be converted to .img files. This can be done
+using any program that supports converting .IMD files to .img files.
+
+\subsection{Installing PenPointOS on FreeDOS}
+
+After installing FreeDOS in a virtual machine and converting the ImageDisk
+files to .img, now it is the time to install PenPoint OS. In order to do so
+a floppy device must be added to the VM configuration. Here the file DISK1.img
+must be used as source. Inside FreeDOS inserted floppy will be available as A:
+drive. To access another drive simply type its name. Finally to run the
+installation execute install.exe \ref{fig:fd-main-screen}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{fd-main-screen.png}
+    \caption{FreeDOS: main screen}
+    \label{fig:fd-main-screen}
+\end{figure}
+
+Then get through the installation wizard by confirming to use the C: drive for
+installation and the installation subdirectory \ref{fig:penpoint-installation}.
+The default choices are fine.  After installation from the first floppy is
+finished the wizard will ask to insert the next disk until the contents of all
+eight disks are installed.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\linewidth}
+        \includegraphics[width=\linewidth]{penpoint-installation-1.png}
+        %\caption{PenPoint OS installation}
+        %\label{fig:penpoint-installation-1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\linewidth}
+        \includegraphics[width=\linewidth]{penpoint-installation-2.png}
+        %\caption{PenPoint OS installation}
+        %\label{fig:penpoint-instsallation-2}
+    \end{subfigure}
+    \caption{FreeDOS: PenPoint OS install wizard}
+    \label{fig:penpoint-installation}
+\end{figure}
+
+Just before the installation wizard closes it informs that additional user
+configuration will be required before running PenPointOS will be possible. It
+tries to create or modify an existing \emph{CONFIG.SYS} file with a directive
+\emph{FILES=20} and creates a new file called AUTOEXEC.NEW that has to be
+incorporated into an existing \emph{AUTOEXEC.BAT} file
+\ref{fig:penpoint-installation-2}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\linewidth}
+        \includegraphics[width=\linewidth]{penpoint-installation-3.png}
+        %\caption{PenPoint OS installation}
+        %\label{fig:penpoint-installation-3}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\linewidth}
+        \includegraphics[width=\linewidth]{penpoint-installation-4.png}
+        %\caption{PenPoint OS installation}
+        %\label{fig:penpoint-instsallation-4}
+    \end{subfigure}
+    \caption{FreeDOS: PenPoint OS installation, config changes}
+    \label{fig:penpoint-installation-2}
+\end{figure}
+
+FreeDOS actually by default uses \emph{FDCONF.SYS} and \emph{FDAUTO.BAT} files
+instead. The config file is a special file that is run during startup and has
+a special set of commands that can be run during boot. The \emph{FILES=20}
+command sets the maximum number of file descriptors to 20. This is unnecessary
+because default \emph{FDCONF.SYS} already uses a value of 40. The autoexec file
+is a regular batch file that is automatically run after startup. The contents
+of the \emph{AUTOEXEC.NEW} file are simply commands setting the environmental
+variables used by PenPoint with paths from installation. These can be just
+copied at the top of the \emph{FDAUTO.BAT} \ref{fig:fd-config}. It might be
+useful to remember not to overwrite the \emph{PATH} variable but instead to
+prepend the PenPoint value so that executables bundled with FreeDOS can still
+be found.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{fd-config.png}
+    \caption{FreeDOS: FDAUTO.BAT config file}
+    \label{fig:fd-config}
+\end{figure}
+
+Now we can try running PenPoint.
+
+\subsection{Running PenPointOS}
+
+%Now that the installation is complete to run PenPoint a script
+%\emph{\\
+%\textbackslash{}PENPOINT\textbackslash{}SDK\textbackslash{}UTIL\\
+%\textbackslash{}DOS\textbackslash{}GO.BAT\\
+%} \\
+Now that the installation is complete to run PenPoint a script
+
+\Verb[fontshape=it]|\PENPOINT\SDK\UTIL\DOS\GO.BAT|
+
+\noindent
+should be used. Here however we encounter the first problem. PenPoint does not
+start, instead it crashes with a JemmEx exception \ref{fig:jemmex}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{jemmex.png}
+    \caption{FreeDOS: JemmEx exception}
+    \label{fig:jemmex}
+\end{figure}
+
+After trying a few things it turns out that this issue does not occur if FreeDOS
+was booted in safe mode - one of the booting options defined in
+\emph{FDCONF.SYS}. As it turns out JemmEx is in fact not loaded this way.
+JemmEx is an Expanded Memory Manager. Expanded Memory was a workaround for 8088
+and 8086 CPUs that allowed using the Upper Memory, that is between 640K and 1M
+to address memory beyond 1M. Extended Memory on the other hand refers to memory
+beyond the 1M on 286 and newer processors which could address this memory
+normally. PenPointOS does not support Expanded Memory and only works on Extended
+Memory \cite{godevtools}.
+
+Now after removing loading JemmEx from startup PenPointOS starts. However there
+is another problem. After some loading a broken pen and a number 1000 appears,
+and the initialisation hangs \ref{fig:broken-pen}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{broken-pen.png}
+    \caption{PenPoint OS: broken pen error 1000}
+    \label{fig:broken-pen}
+\end{figure}
+
+The error 1000 according to the ``Pen Point Development Tools'' book means that
+no pointing device was enabled in the \emph{MIL.INI} file \cite{godevtools}.
+After uncommenting the line that enables PS2 mouse support in \emph{MIL.INI}
+\ref{fig:mil-ini}, PenPointOS boots correctly \ref{fig:penpoint-mainscreen}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\linewidth}
+        \includegraphics[width=\linewidth]{mil-ini.png}
+        \caption{FreeDOS: MIL.INI}
+        \label{fig:mil-ini}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\linewidth}
+        \includegraphics[width=\linewidth]{penpoint-mainscreen.png}
+        \caption{PenPoint OS: main screen}
+        \label{fig:penpoint-mainscreen}
+    \end{subfigure}
+    \caption{booted PenPoint OS}
+\end{figure}
+
+\subsection{Using a graphics tablet to point}
+
+Now PenPoint is running and working correctly with a mouse.  Unfortunately just
+because a mouse is working does not mean that other pointing devices will work
+as well.  For example a mouse and a graphics tablet used with a finger work
+without issue, but using a stylus is unwieldy.  Instead of moving with the pen
+on the tablet, the pointer behaves more like a joystick - when the stylus is in
+the middle of the tablet the pointer is stationary but when stylus is moved off
+centre then the pointer moves in that direction, and the farther the stylus is
+from the centre the faster it moves.  All of this happens because a mouse or
+a finger movement on a tablet is a relative movement - the mouse moves by some
+distance in a direction then the pointer should also move by that distance in
+that direction, a stylus or a touchscreen, on the other hand, use absolute
+movement - the stylus touches one corner of the tablet, the pointer should be
+moved to the coroner of the screen.  The PS2 mouse emulation QEMU provides does
+not have this functionality.
+
+% TODO: \dots?
+\begin{codeblock}
+    \lstinputlisting[
+        caption=ps2.c,
+        language=C++,
+        linerange={783-785,793-794,802-810,835-836},
+    ]{ps2-old.c}
+\end{codeblock}
+%\begin{minipage}{\linewidth}
+%    \begin{addmargin}[8mm]{0mm}
+%        \begin{lstlisting}[
+%            language=C++,
+%            numbers=left,
+%            firstnumber=1,
+%            %    caption={\emph{Hello world} w HTML},
+%            aboveskip=10pt,
+%            %escapeinside=``,
+%            breaklines=true,
+%            ]
+%static void ps2_mouse_event(DeviceState *dev, QemuConsole *src,
+%                            InputEvent *evt)
+%{
+%    ...
+%    PS2MouseState *s = (PS2MouseState *)dev;
+%    InputMoveEvent *move;
+%    ...
+%
+%    switch (evt->type) {
+%    case INPUT_EVENT_KIND_REL:
+%        move = evt->u.rel.data;
+%        if (move->axis == INPUT_AXIS_X) {
+%            s->mouse_dx += move->value;
+%        } else if (move->axis == INPUT_AXIS_Y) {
+%            s->mouse_dy -= move->value;
+%        }
+%        break;
+%    ... 
+%    }
+%}
+%        \end{lstlisting}
+%    \end{addmargin}
+%\end{minipage}
+
+%QEMU also provides a graphics tablet emulation but it is a USB HID device that
+%has to be initialised by the operating system. Simply adding a case handling an
+%absolute movement to the PS2 mouse code, similar to the one in the source of
+%the HID device, makes the mouse stop working altogether. It would probably have
+%to keep a state where the pointer is and calculate the delta from there.
+%
+%
+%\begin{minipage}{\linewidth}
+%    \begin{addmargin}[8mm]{0mm}
+%        \begin{lstlisting}[
+%            language=C++,
+%            numbers=left,
+%            firstnumber=1,
+%            %    caption={\emph{Hello world} w HTML},
+%            aboveskip=10pt
+%            ]
+%    case INPUT_EVENT_KIND_ABS:
+%        move = evt->u.abs.data;
+%        if (move->axis == INPUT_AXIS_X) {
+%            s->mouse_dx = move->value;
+%        } else if (move->axis == INPUT_AXIS_Y) {
+%            s->mouse_dy = move->value;
+%        }
+%        break;
+%        \end{lstlisting}
+%    \end{addmargin}
+%\end{minipage}
+
+%At this point in time it is impossible to get rid of this issue without a big
+%time investment. 
+
+%Fortunately u
+Using both a mouse and a tablet works out of the box in a different
+virtual machine program: VirtualBox. VirtualBox follows a more plug-and-play
+philosophy at a cost of being generally slower than QEMU. It has much less
+configuration options, is less optimised and does not provide support for such
+functionality as using devices directly with passthrough. The developers of
+VirtualBox have put an effort into it working without the need for much
+configuration instead.% The incurred speed penalty from using VirtualBox and not
+%QEMU to run PenPoint is not perceivable if it is there at all.
+
+
+
+
+\clearpage % Rozdziały zaczynamy od nowej strony.
+
+\section{Making tablet and stylus work in FreeDOS in QEMU}
+
+% hid nie działa bo nie ma go kto zainicializować
+% in the following section...
+
+QEMU supports using tablet as a pointing device but it does not work in FreeDOS
+because QEMU only provides a generic Human Interface Device (HID) driver.  The
+USB-HID specification is a standard that allows for many different input and
+output devices to communicate with the computer without any additional software.
+For the QEMU HID device to work however it must be initialised by the operating
+system.  DOS obviously came long before HID standard was created, and so it is
+not supported by FreeDOS.
+
+In this section I will describe the process of making the tablet behave as the
+pointing device in the expected way inside FreeDOS on QEMU.
+
+\subsection{Creating testing environment}
+
+% używanie qemu bez trzymanki trudne
+
+QEMU is extremely feature rich.  This is a great advantage, however it makes
+using, tuning configuring it pretty cumbersome, especially since QEMU by itself
+only provides console arguments as a way to specify settings.
+
+\subsubsection{libvirt}
+
+% co to libvirt, virsh, virt-manager
+
+Libvirt is a collection of software whose goal is to provide simple, continent
+and unified way to manage virtualisation functionality such as virtual machines
+and hypervisors, but also containers and network interfaces.  The pieces of
+software that make up libvirt are a stable C API, a libvirtd daemon, and
+a command line client virsh.
+
+But virsh is not the only client.  The way libvirt operates anyone can use the
+API to communicate with the daemon in their client.  Apart from virsh GOME
+provides its own libvirt client - GOME Boxes - that matches the rest of their
+environment, and there also exist an add-on to cockpit - the web-based server
+administration tool.  I used virt-manager.
+
+Here comes the problem however: although virt-manager proved to be great for
+configuring amounts of memory, number of cores and adding peripherals, it does
+not allow a way to change the path of the used QEMU executable, and overwriting
+an executable provided and managed by the distribution's package manager is
+something that could lead to serious issues.
+
+\subsubsection{Using virsh}
+
+% virsh dump cmd: zrzut
+% virsh edit: zrzut
+% sprawdzanie logów: zrzut
+
+My first thought was to somehow find out the exact way that virt-manager
+executes the QEMU binary, that is the command line parameters and maybe the
+environment.  It turns out that every guest configuration is stored in xml
+format in something called the domain.  It also turns out that the virsh command
+line libvirt client has the ability to convert that xml to equivalent shell
+invocation.
+
+\begin{codeblock}
+    \dots
+    \lstinputlisting[
+        caption={},
+        language=bash,
+        linerange={7-15},
+        deletekeywords={local,wait},
+    ]{virsh-domxml-to-native.sh}
+    \dots
+    \lstinputlisting[
+        caption={},
+        language=bash,
+        linerange={29-36},
+        deletekeywords={local,wait},
+    ]{virsh-domxml-to-native.sh}
+    \dots
+    \lstinputlisting[
+        caption={\lstinline|virsh domxml-to-native qemu-argv --domain PenPointOS|},
+        language=bash,
+        linerange={56-59},
+        deletekeywords={local,wait},
+    ]{virsh-domxml-to-native.sh}
+\end{codeblock}
+
+This however still did not work.  At the very least many of the paths for files
+and directories that it used for example in the \lstinline{/var/lib/libvirt} are
+dynamically created at runtime.  I tried copying them and adjusting the startup
+script accordingly but it still would not cooperate.  This clearly was not the
+right approach.
+
+How about modifying the domain xml directly?  Fortunately virsh allows to do
+this using the \emph{edit} command.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption={},
+        language=XML,
+        linerange={1-16},
+    ]{virsh-dumpxml.xml}
+
+    \dots
+
+    \lstinputlisting[
+        caption={\lstinline|virsh edit PenPointOS|},
+        language=XML,
+        linerange={123-123},
+    ]{virsh-dumpxml.xml}
+\end{codeblock}
+
+\noindent
+Especially interesting is the line containing the \emph{emulator} tag.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption={},
+        language=XML,
+        linerange={35-36},
+    ]{virsh-dumpxml.xml}
+    
+    \dots
+
+    \lstinputlisting[
+        caption={\lstinline|virsh edit PenPointOS|},
+        language=XML,
+        linerange={122-123},
+    ]{virsh-dumpxml.xml}
+\end{codeblock}
+
+\noindent
+According to libvirt documentation \cite{libvirt} the \emph{emulator} element
+specifies the fully qualified path to the emulator binary.
+
+With this knowledge I was able to clone the QEMU virtual machine which had
+FreeDOS with PenPoint SDK installed and change the binary that was used for
+emulation to the one supplied by me.  This way I could have two virtual machines
+that differed only in the QEMU binary they used which was useful as
+a comparison.
+
+\subsection{Building QEMU} %?
+
+% info z aur
+% configure
+% make depends
+% brak spice-protocol
+
+When using QEMU in conjunction with other tools like libvirt it is important
+that it is built with all the required functionality.  QEMU uses
+a \emph{configure} script to determine local build environment characteristic.
+One way to increase the build speed is to configure the build environment to
+only compile the x86 system target.
+
+\begin{codeblock}
+    \begin{lstlisting}[
+        caption={configure},
+        language=bash,
+        numbers=none,
+        deletekeywords={enable},
+    ]
+        ../configure \
+            --target-list=x86_64-softmmu \
+            --sysconfdir=/etc --localstatedir=/var \
+            --libexecdir=/usr/lib/qemu --smbd=/usr/bin/smbd \
+            --enable-modules --enable-sdl --disable-werror
+    \end{lstlisting}
+\end{codeblock}
+
+The \emph{virsh edit} command verifies correctness of the modified domain
+configuration.  In my case it was able to detect that the newly built QEMU
+binary was missing support for SPICE which virt-manager used for display and
+input to that virtual machine.  A good way to find out how QEMU must be
+configured and its dependencies is to inspect how a package for specified system
+is built.  On Arch Linux one can easily read \emph{PKGBUILD} - a file describing
+the build process - for \emph{qemu-git} on Arch User Repository.
+
+\subsection{Changes to QEMU source code}
+
+% możliwość użycia tabletu w ppos, brak dokumentów itp.
+% użycie ps2 do emulowania myszy
+% opis ps2?
+% centrum jest ui/input.c
+%   w jaki sposób przekazuje info, skąd bierze, skąd wiadomo czy abs czy rel
+% w moim przypadku dostaje info z ui/spice
+% kod ps2
+
+Although PenPoint supports multiple tablet devices, and even provides an option
+to define a communication protocol for unsupported one \cite{godevtools}, I was
+not able to find any information about graphical tablets from that time, much
+less technical documentation that would be needed to create emulated version.
+
+This however is not necessary.  Instead of creating a new device, a device that
+is already present in QEMU and whose protocol is well supported - the PS/2
+mouse.  That is how Synaptic touchpad worked: when Synaptic drives that
+supported absolute mode were not present the touchpad identified itself as
+a mouse and used either PS/2, Serial or Apple Desktop Bus protocols
+\cite{synapticsinterfacing}.
+
+
+
+
+
+
+% TODO poprawić conclusion/further works
+
