@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "wut-thesis"
+version = "0.1.0"
+description = ""
+authors = ["Piotrek Kochański <khnsky@khnsky.cc>"]
+readme = "README.md"
+packages = [{include = "wut_thesis"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+jinja2 = ">=3.0.0"
+pdfminer-six = ">=2021"
+scons = ">=4.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
