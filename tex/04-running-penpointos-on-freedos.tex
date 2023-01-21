@@ -493,7 +493,393 @@ supported absolute mode were not present the touchpad identified itself as
 a mouse and used either PS/2, Serial or Apple Desktop Bus protocols
 \cite{synapticsinterfacing}.
 
+\subsubsection{PS/2 protocol}
 
+Although the PS/2 protocol was introduced by IBM in 1987 the port was still
+present on most of the desktop motherboards sold until just few years ago.
+Over the years many extensions of the standard were created by the likes of
+
+Logitech or Microsoft.
+One such popular extensions is the Microsoft Intellimouse extensions which
+allowed for use of scroll wheel or scroll wheel and five buttons instead of the
+usual three \cite{ps2interface}.
+
+Normally the PS/2 mouse sends information about its movement in a packet of
+three bytes \ref{table:ps2packet3b}.
+
+\begin{table}[H]
+    \begin{tabular}{lllllllll}
+        & bit 7 & bit 6 & bit 5 & bit 4 & bit 3 & bit 2 & bit 1 & bit 0 \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 1}        & \multicolumn{1}{l|}{Y overflow}   &
+        \multicolumn{1}{l|}{X overflow}    & \multicolumn{1}{l|}{Y sign}       &
+        \multicolumn{1}{l|}{X sign}        & \multicolumn{1}{l|}{always 1}     &
+        \multicolumn{1}{l|}{M btn} & \multicolumn{1}{l|}{R btn} &
+        \multicolumn{1}{l|}{L btn} \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 2} & \multicolumn{8}{c|}{X movement} \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 3} & \multicolumn{8}{c|}{Y movement} \\
+
+        \cline{2-9} 
+    \end{tabular}
+    \caption{PS/2 mouse packet \cite{ps2interface}}
+    \label{table:ps2packet3b}
+\end{table}
+
+\noindent
+In order to enable the Intellimouse extensions the mouse sends a sequence of
+three `Set sample rate' commands with predefined magic values.  A driver
+compatible with that extension replies by issuing a `Get device ID' command to
+which the mouse will respond with ID of 0x03.  Now both devices switch to using
+four byte packets \ref{table:imps2scroll} \ref{table:imps25buttons}.
+
+\begin{table}[H]
+    \begin{tabular}{lllllllll}
+        & bit 7 & bit 6 & bit 5 & bit 4 & bit 3 & bit 2 & bit 1 & bit 0 \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 1}        & \multicolumn{1}{l|}{Y overflow}   &
+        \multicolumn{1}{l|}{X overflow}    & \multicolumn{1}{l|}{Y sign}       &
+        \multicolumn{1}{l|}{X sign}        & \multicolumn{1}{l|}{always 1}     &
+        \multicolumn{1}{l|}{M btn} & \multicolumn{1}{l|}{R btn} &
+        \multicolumn{1}{l|}{L btn} \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 2} & \multicolumn{8}{c|}{X movement} \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 3} & \multicolumn{8}{c|}{Y movement} \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 4} & \multicolumn{8}{c|}{Z movement} \\
+
+        \cline{2-9} 
+    \end{tabular}
+    \caption{Intellimouse PS/2 mouse with scroll wheel packet \cite{ps2interface}}
+    \label{table:imps2scroll}
+\end{table}
+
+\noindent
+and
+
+\begin{table}[H]
+    \begin{tabular}{lllllllll}
+        & bit 7 & bit 6 & bit 5 & bit 4 & bit 3 & bit 2 & bit 1 & bit 0 \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 1}     & \multicolumn{1}{l|}{Y overflow}   &
+        \multicolumn{1}{l|}{X overflow} & \multicolumn{1}{l|}{Y sign}       &
+        \multicolumn{1}{l|}{X sign}     & \multicolumn{1}{l|}{always 1}     &
+        \multicolumn{1}{l|}{M btn}      & \multicolumn{1}{l|}{R btn}        &
+        \multicolumn{1}{l|}{L btn} \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 2} & \multicolumn{8}{c|}{X movement} \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 3} & \multicolumn{8}{c|}{Y movement} \\
+
+        \cline{2-9} 
+
+        \multicolumn{1}{l|}{byte 4}     & \multicolumn{2}{c|}{always 0} &
+        \multicolumn{1}{l|}{5th btn}    & \multicolumn{1}{l|}{4th btn}  &
+        \multicolumn{4}{c|}{Z movement} \\
+
+        \cline{2-9} 
+    \end{tabular}
+    \caption{Intellimouse PS/2 mouse with scroll wheel + 5 buttons packet \cite{ps2interface}}
+    \label{table:imps25buttons}
+\end{table}
+
+\noindent
+The QEMU PS/2 mouse device supports both of these extensions.
+
+There does not seem to be any current publication of the standard
+\cite{ps2interface}.
+
+\subsubsection{SPICE initialization}
+
+SPICE project is a software solution that aims to provide remote-display to
+virtual environments, on the same computer or anywhere on the internet.  It is
+comprised of the SPICE protocol, server, and several client implementations are
+available.  The \emph{virt-manager} program uses either SPICE or VNC to provide
+display and pointer input, and QEMU is compatible also with other sources.  The
+description of SPICE is ilustratory. % TODO
+
+QEMU defines a SPICE module.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption=spice-core.c,
+        language=C,
+        linerange={968-985},
+    ]{spice-core.c}
+\end{codeblock}
+
+Inside the \emph{qemu\_spice\_init} function \emph{qemu\_spice\_input\_init}
+function is called.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption={},
+        language=C,
+        linerange={640-641},
+    ]{spice-core.c}
+    \dots
+    \lstinputlisting[
+        caption={},
+        language=C,
+        linerange={827-827},
+    ]{spice-core.c}
+    \dots
+    \lstinputlisting[
+        caption=spice-core.c,
+        language=C,
+        linerange={852-852},
+    ]{spice-core.c}
+\end{codeblock}
+
+The \emph{qemu\_spice\_input\_init} function adds the keyboard and mouse
+interfaces, and adds and calls a mouse mode notifier.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption=spice-input.c,
+        language=C,
+        linerange={243-262},
+    ]{spice-input.c}
+\end{codeblock}
+
+The \emph{mouse\_mode\_notifier} adds a SPICE tablet interface if there is an
+input handler with absolute mode available.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption=spice-input.c,
+        language=C,
+        linerange={226-241},
+    ]{spice-input.c}
+\end{codeblock}
+
+The function \emph{qemu\_input\_is\_absolute} simply checks if any of the
+registered input handlers has the \emph{INPUT\_EVENT\_MASK\_ABS} flag set.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption=input.c,
+        language=C,
+        linerange={493-500},
+    ]{input.c}
+\end{codeblock}
+
+\subsubsection{PS/2 input device initialization}
+
+The QEMU PS/2 mouse is registered using the standard QEMU interface for adding
+devices.
+
+% static const TypeInfo ps2_mouse_info
+% ps2_info 
+% ps2_register_types
+% type_init
+\begin{codeblock}
+    \lstinputlisting[
+        caption={ps2.c},
+        language=C,
+        linerange={1309-1315,1331-1339,1341-1346,1348-1348},
+    ]{ps2-new.c}
+\end{codeblock}
+
+The \emph{ps2\_info} is used as a base type for both PS/2 mouse and keyboard.
+Inside the PS/2 mouse class initialization function a realization function is
+set to register the PS/2 mouse device as an input handler.
+
+% ps2_mouse_realize
+% ps2_mouse_class_init
+\begin{codeblock}
+    \lstinputlisting[
+        caption={ps2.c},
+        language=C,
+        linerange={1276-1279,1298-1307},
+    ]{ps2-new.c}
+\end{codeblock}
+
+\noindent
+The reset function sets all of the device state to the initial values, and the
+VM state description structure is used to provide a mechanism to save and
+restore the state of all devices.
+
+The \emph{qemu\_input\_handler\_register} function is called with a struct that
+describes the capabilities of the mouse and callbacks for events and syncing.
+Here the \emph{INPUT\_EVENT\_MASK\_ABS} is added to indicate that the PS/2 mouse
+can work in absolute mode.  Setting this flag will make it so that the SPICE
+tablet interface is added, and absolute mode events will be handled by the PS/2
+mouse device.
+
+% ps2_mouse_handler
+\begin{codeblock}
+    \lstinputlisting[
+        caption=ps2.c,
+        language=C,
+        linerange={1269-1279},
+    ]{ps2-new.c}
+\end{codeblock}
+
+\subsubsection{How input in QEMU is processed}
+
+When pointer position changes SPICE uses either mouse or tablet interfaces that
+were initialised in the \emph{qemu\_spice\_input\_init} function.  If absolute
+input handler is available the tablet interface is used for absolute pointer
+% TODO czy tylko?
+position changes.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption=spice-input.c,
+        language=C,
+        linerange={215-224},
+    ]{spice-input.c}
+\end{codeblock}
+
+SPICE calls the \emph{tablet\_position} function using the \emph{position}
+member of the tablet interface.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption=spice-input.c,
+        language=C,
+        linerange={184-194},
+    ]{spice-input.c}
+\end{codeblock}
+
+The \emph{tablet\_position} queues the absolute input for both axes and issues
+the event sync.
+
+The \emph{qemu\_input\_queue\_abs} scales the input value and sends the event.
+The \emph{qemu\_input\_send\_event} function performs some checks and calls the
+\emph{replay\_input\_event}, which adds the event to replay if in replay mode,
+and otherwise it calls the \emph{qemu\_input\_send\_event\_impl}.  Finally this
+function finds an appropriate input handler and calls its event callback.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption={},
+        language=C,
+        linerange={529-543},
+    ]{input.c}
+    \lstinputlisting[
+        caption={},
+        language=C,
+        linerange={353-354,378-379},
+    ]{input.c}
+    \lstinputlisting[
+        caption=input.c,
+        language=C,
+        linerange={333-334,345-351},
+    ]{input.c}
+\end{codeblock}
+
+\noindent
+The event sync functionality is implemented similarly ending in calling the
+input handler callback for syncing.
+
+\subsubsection{Emulation of absolute input using PS/2 mouse device}
+
+Because the PS/2 mouse protocol uses relative pointer mode - that is it
+transfers by how much the mouse moved from the last position - and a tablet
+provides values in absolute mode - that is it reports the current absolute
+stylus position - the absolute mode values must be converted to relative terms
+somehow.  To do so the mouse device structure should hold the last known
+absolute position.  Whenever an event occurs the last known absolute position
+would be updated, and when handling an event with absolute movement the position
+difference could be calculated and communicated using the standard PS/2
+protocol.
+
+The fields \emph{absolute\_x} and \emph{absolute\_y} are added to the
+\emph{PS2MouseState} structure.
+
+%\begin{codeblock}
+%    \begin{lstlisting}[
+%        caption=ps2.h,
+%        language=C,
+%        escapechar=!,
+%    ]
+%struct PS2MouseState {
+%    PS2State parent_obj;
+%
+%    uint8_t mouse_status;
+%    uint8_t mouse_resolution;
+%    uint8_t mouse_sample_rate;
+%    uint8_t mouse_wrap;
+%    uint8_t mouse_type; /* 0 = PS2, 3 = IMPS/2, 4 = IMEX */
+%    uint8_t mouse_detect_state;
+%    int mouse_dx; /* current values, needed for 'poll' mode */
+%    int mouse_dy;
+%    int mouse_dz;
+%    int mouse_dw;
+%    !\colorbox{green}{{int absolute\_x;}}!
+%    !\colorbox{green}{{int absolute\_y;}}!
+%    uint8_t mouse_buttons;
+%};
+%    \end{lstlisting}
+%\end{codeblock}
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption=ps2.h,
+        language=C,
+        linerange={81-97},
+    ]{ps2-new.h}
+\end{codeblock}
+
+They are also added to the reset function, and the \emph{VMStateDescription}
+struct.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption=ps2.c,
+        language=C,
+        linerange={1091-1112,1114-1126}
+    ]{ps2-new.c}
+\end{codeblock}
+
+The \emph{INPUT\_EVENT\_MASK\_ABS} flag is also set for the PS/2 mouse input
+handler.  This makes it so that QEMU recognizes that it can handle absolute
+input, and that SPICE registers the tablet interface.  Then events with absolute
+movement are sent to the PS/2 mouse input handler \emph{event} function.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption=ps2.c,
+        language=C,
+        linerange={1269-1274},
+    ]{ps2-new.c}
+\end{codeblock}
+
+Finally the code that updates the current known absolute position, and
+calculates the absolute movement deltas is added to the \emph{ps2\_mouse\_event}
+function.
+
+\begin{codeblock}
+    \lstinputlisting[
+        caption=ps2.c,
+        language=C,
+        linerange={783-785,802-848,873-874},
+    ]{ps2-new.c}
+\end{codeblock}
 
 
 
