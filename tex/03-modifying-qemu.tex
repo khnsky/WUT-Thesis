@@ -1,9 +1,9 @@
 \clearpage % Rozdziały zaczynamy od nowej strony.
 
-\section{Modifying QEMU source to run PenPointOS}
+\section{Modifying QEMU source to run PenPoint OS}
 
 In this first part I will describe what the JPC emulator is and show the
-patches created by prof. Simon Schubiger that allow it to run PenPointOS, as
+patches created by prof. Simon Schubiger that allow it to run PenPoint OS, as
 well as explain why it is not suitable for our goal. Then I will present the
 architecture of the QEMU emulator and the reasons it was chosen as the
 appropriate solution, and finally I will show how I tried to port the changes
@@ -45,7 +45,7 @@ using the stylus, as well as Windows for Pen Computing and GRiD PenRight
 
 The NCR System 3125 was one of the flagship PenPoint computers and its
 hardware, apart from the WACOM digitizer, was rather standard x86, thus making
-the PenPointOS version for it an appropriate choice for emulation.
+the PenPoint OS version for it an appropriate choice for emulation.
 
 \subsection{The JPC emulator}
 
@@ -64,23 +64,7 @@ had to be sped up to look normal \cite{schubiger2015}.
 
 In the following sections I will show how the JPC emulator works and how it is
 designed. Then I will describe the modifications to the source code created by
-prof. Simon Schubiger that allow it to run PenPointOS.  JPC was created by the
-University of Oxford's Particle Physics Subdepartment. Although its github page
-claims it is fast it was not its main concern. The advertised features are the
-flexibility, security and it being cross-platform given that it is written in
-100\% JAVA programming language. These come however at a cost. The JAVA
-environment makes it so that JPC can run virtually on any hardware that JVM is
-available for, and the memory safety provided by the JVM as well as sandboxing
-provide great security. This however comes at a cost, it will most certainly be
-much slower than a highly optimised emulator written in a systems programming
-language like C or C++. In fact the JPC emulator was too slow to run PenPoint
-OS at a speed that would be comfortable for use - the video showing the
-operation of PenPoint on JPC on professor's Schubiger channel had to be sped up
-to look normal \cite{schubiger2015}.
-
-In the following sections I will show how the JPC emulator works and how it is
-designed. Then I will describe the modifications to the source code created by
-prof. Simon Schubiger that allow it to run PenPointOS.
+prof. Simon Schubiger that allow it to run PenPoint OS.
 
 \subsubsection{Architecture of JPC}
 
@@ -284,10 +268,10 @@ method of the \emph{PC} object that executes instructions in processor's
 current mode by calling functions of objects representing both processor and
 address spaces.
 
-\subsubsection{Implementation of JPC modifications for running PenPointOS}
+\subsubsection{Implementation of JPC modifications for running PenPoint OS}
 
 In this section I will explain what changes have been made by professor
-Schubiger in order to make PenPointOS work in the JPC emulator, as well as how
+Schubiger in order to make PenPoint OS work in the JPC emulator, as well as how
 they work. First I will show the overview of what has been changed and then
 I will describe in detail three classes representing components of the NCR
 System 3125 that were necessary for the purposes of its emulation.
@@ -811,7 +795,7 @@ written.
 
 \subsubsection{Building and running JPC with the patch}
 
-Unfortunately I failed to build and run PenPointOS with this modified version
+Unfortunately I failed to build and run PenPoint OS with this modified version
 myself. The original source code is really old, and targets an outdated Java
 version, that my installation would refuse to compile. But even after changing
 the target version, fixing some hardcoded paths that were used for resources,
@@ -891,7 +875,7 @@ performed. This is the ``epilogue''. Because these ``prologues'' and
 ``epilogues'' can be quite costly performance wise QEMU can chain multiple TBs
 together without ``prologues'' and ``epilogues'' in between. QEMU also performs
 several optimizations on the Translation Blocks such as dead code elimination
-\cite{qemu2022}.
+\cite{qemu2022} \cite{vasut2017}.
 
 \subsubsection{Adding a device code to the QEMU source tree}
 
@@ -1274,10 +1258,10 @@ characteristics. Meson also processes \emph{Kconfig} and \emph{*.mak} files
 that describe the dependencies among various features and subsystems. The
 \emph{Kconfig} files use almost the same language as the linux kernel
 \emph{Kconfig} files but only so slightly different. The output of the Meson
-stage are \emph{build.ninja} files but the ninja build tool is not used.
-Instead the files are used to synthesise rules for Make. The final stage and
-also the second step for the user is to run Make with the rules created from
-the ninja file \cite{qemu2022}.
+stage are \emph{build.ninja} files but the ninja build tool is not used
+directly.  Instead the files are used to synthesise rules for Make. The final
+stage and also the second step for the user is to run Make with the rules
+created from the ninja file \cite{qemu2022}.
 
 In order to make the simple example device defined before available to QEMU at
 runtime it is only necessary to create a new entry in the \emph{Kconfig} file
@@ -1313,8 +1297,8 @@ file to the appropriate sourceset if the configuration option created in the
 \noindent
 Now after the changes to the \emph{Kconfig} and \emph{meson.build} files the
 newly created device can be specified on the command line. The output shows
-that a class is initialised  once but an instance is created for each device
-specified \ref{fig:qemu-test-device-output}.
+that a class is initialised  once but an instance is created twice - for each
+device specified \ref{fig:qemu-test-device-output}.
 
 %\begin{figure}[!h]
 \begin{figure}[H]
@@ -1326,11 +1310,16 @@ specified \ref{fig:qemu-test-device-output}.
 
 \subsection{Conclusion}
 
-In the end the issues with the modified JPC emulator, the steep learning curve
-for QEMU development and a possibility that debugging something or
-understanding why something does not work could prove simply impossible for me
-or require knowledge that could take years to obtain, especially if the only
-symptom is that the system does not boot, made me abandon QEMU as a platform to
-use. This was also motivated by the fact that a more straightforward solution,
-which will be discussed in the next chapter,  presented itself.
+%In the end the issues with the modified JPC emulator, the steep learning curve
+%for QEMU development and a possibility that debugging something or
+%understanding why something does not work could prove simply impossible for me
+%or require knowledge that could take years to obtain, especially if the only
+%symptom is that the system does not boot, made me abandon QEMU as a platform to
+%use. This was also motivated by the fact that a more straightforward solution,
+%which will be discussed in the next chapter,  presented itself.
+
+In the end the issues with the modified JPC emulator, and the unnecessary
+complexity that fell outside the scope of this work I decided to consider
+a different approach.  In the next chapter a more straightforward and less error
+prone solution that uses a developer SDK version of PenPoint OS is discussed.
 

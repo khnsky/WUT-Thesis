@@ -1,27 +1,28 @@
 \clearpage % Rozdziały zaczynamy od nowej strony.
 
-\section{Running PenPointOS on FreeDOS}
+\section{Running PenPoint OS on FreeDOS}
 
-In this second part I will explain what FreeDOS and PenPointOS SDK are, and how
-to install and run the PenPointOS version intended for developers. Using this
+In this second part I will explain what FreeDOS and PenPoint OS SDK are, and how
+to install and run the PenPoint OS version intended for developers. Using this
 version of PenPoint OS was made possible after one of the commenters on
-professor Schubiger original PenPointOS video found the installation media
+professor Schubiger original PenPoint OS video found the installation media
 files hosted on a site dedicated to archiving computer history.
 
 In these following sections I will outline the steps to installing the
-PenPointOS version for MS-DOS, and running on QEMU in FreeDOS.
+PenPoint OS version for MS-DOS, and running on QEMU in FreeDOS.
 
 \subsection{PenPoint for DOS}
 
-The creators of PenPointOS knew that users would not choose their operating
+The creators of PenPoint OS knew that users would not choose their operating
 system over an established solution, even if it was a better product, had there
-not been software written for it. That is why making the barrier to entry for
-developers as low as possible, and making them productive as fast as possible
-was one of the goals Robert Carr, the architect of PenPoint, outlined as a key
-requirement in the book ``The Power of PenPoint'' \cite{carr1991}. The creators
-also knew that programmers would not be able or eager to invest in new devices.
-That is why the PenPointOS Software Development Kit included a version of
-PenPointOS that could be installed on compatible desktop PCs running MS-DOS.
+not been software written for it \cite{barbariansbillgates}. That is why making
+the barrier to entry for developers as low as possible, and making them
+productive as fast as possible was one of the goals Robert Carr, the architect
+of PenPoint, outlined as a key requirement in the book ``The Power of
+PenPoint'' \cite{carr1991}. The creators also knew that programmers would not
+be able or eager to invest in new devices.  That is why the PenPoint OS Software
+Development Kit included a version of PenPoint OS that could be installed on
+compatible desktop PCs running MS-DOS.
 
 \subsection{What is FreeDOS}
 
@@ -43,7 +44,7 @@ cannot be used with QEMU as the format is not supported. In order for them to
 be readable to QEMU these must be converted to .img files. This can be done
 using any program that supports converting .IMD files to .img files.
 
-\subsection{Installing PenPointOS on FreeDOS}
+\subsection{Installing PenPoint OS on FreeDOS}
 
 After installing FreeDOS in a virtual machine and converting the ImageDisk
 files to .img, now it is the time to install PenPoint OS. In order to do so
@@ -83,7 +84,7 @@ eight disks are installed.
 \end{figure}
 
 Just before the installation wizard closes it informs that additional user
-configuration will be required before running PenPointOS will be possible. It
+configuration will be required before running PenPoint OS will be possible. It
 tries to create or modify an existing \emph{CONFIG.SYS} file with a directive
 \emph{FILES=20} and creates a new file called AUTOEXEC.NEW that has to be
 incorporated into an existing \emph{AUTOEXEC.BAT} file
@@ -128,7 +129,7 @@ be found.
 
 Now we can try running PenPoint.
 
-\subsection{Running PenPointOS}
+\subsection{Running PenPoint OS}
 
 %Now that the installation is complete to run PenPoint a script
 %\emph{\\
@@ -157,10 +158,10 @@ JemmEx is an Expanded Memory Manager. Expanded Memory was a workaround for 8088
 and 8086 CPUs that allowed using the Upper Memory, that is between 640K and 1M
 to address memory beyond 1M. Extended Memory on the other hand refers to memory
 beyond the 1M on 286 and newer processors which could address this memory
-normally. PenPointOS does not support Expanded Memory and only works on Extended
+normally. PenPoint OS does not support Expanded Memory and only works on Extended
 Memory \cite{godevtools}.
 
-Now after removing loading JemmEx from startup PenPointOS starts. However there
+Now after removing loading JemmEx from startup PenPoint OS starts. However there
 is another problem. After some loading a broken pen and a number 1000 appears,
 and the initialisation hangs \ref{fig:broken-pen}.
 
@@ -174,7 +175,7 @@ and the initialisation hangs \ref{fig:broken-pen}.
 The error 1000 according to the ``Pen Point Development Tools'' book means that
 no pointing device was enabled in the \emph{MIL.INI} file \cite{godevtools}.
 After uncommenting the line that enables PS2 mouse support in \emph{MIL.INI}
-\ref{fig:mil-ini}, PenPointOS boots correctly \ref{fig:penpoint-mainscreen}.
+\ref{fig:mil-ini}, PenPoint OS boots correctly \ref{fig:penpoint-mainscreen}.
 
 \begin{figure}[H]
     \centering
@@ -326,7 +327,7 @@ only provides console arguments as a way to specify settings.
 
 % co to libvirt, virsh, virt-manager
 
-Libvirt is a collection of software whose goal is to provide simple, continent
+Libvirt is a collection of software whose goal is to provide simple, convenient
 and unified way to manage virtualisation functionality such as virtual machines
 and hypervisors, but also containers and network interfaces.  The pieces of
 software that make up libvirt are a stable C API, a libvirtd daemon, and
@@ -445,8 +446,8 @@ a comparison.
 When using QEMU in conjunction with other tools like libvirt it is important
 that it is built with all the required functionality.  QEMU uses
 a \emph{configure} script to determine local build environment characteristic.
-One way to increase the build speed is to configure the build environment to
-only compile the x86 system target.
+%One way to increase the build speed is to configure the build environment to
+%only compile the x86 system target.
 
 \begin{codeblock}
     \begin{lstlisting}[
@@ -466,10 +467,11 @@ only compile the x86 system target.
 The \emph{virsh edit} command verifies correctness of the modified domain
 configuration.  In my case it was able to detect that the newly built QEMU
 binary was missing support for SPICE which virt-manager used for display and
-input to that virtual machine.  A good way to find out how QEMU must be
-configured and its dependencies is to inspect how a package for specified system
-is built.  On Arch Linux one can easily read \emph{PKGBUILD} - a file describing
-the build process - for \emph{qemu-git} on Arch User Repository.
+input to that virtual machine, and I was able to fix it by installing a required
+package.  A good way to find out how QEMU must be configured and its
+dependencies is to inspect how a package for specified system is built.  On Arch
+Linux one can easily read \emph{PKGBUILD} - a file describing the build process
+- for \emph{qemu-git} package on Arch User Repository.
 
 \subsection{Changes to QEMU source code}
 
@@ -487,8 +489,8 @@ not able to find any information about graphical tablets from that time, much
 less technical documentation that would be needed to create emulated version.
 
 This however is not necessary.  Instead of creating a new device, a device that
-is already present in QEMU and whose protocol is well supported - the PS/2
-mouse.  That is how Synaptic touchpad worked: when Synaptic drives that
+is already present in QEMU and whose protocol is well supported - the PS/2 mouse
+- can be used.  That is how Synaptic touchpad worked: when Synaptic drives that
 supported absolute mode were not present the touchpad identified itself as
 a mouse and used either PS/2, Serial or Apple Desktop Bus protocols
 \cite{synapticsinterfacing}.
@@ -498,8 +500,8 @@ a mouse and used either PS/2, Serial or Apple Desktop Bus protocols
 Although the PS/2 protocol was introduced by IBM in 1987 the port was still
 present on most of the desktop motherboards sold until just few years ago.
 Over the years many extensions of the standard were created by the likes of
-
 Logitech or Microsoft.
+
 One such popular extensions is the Microsoft Intellimouse extensions which
 allowed for use of scroll wheel or scroll wheel and five buttons instead of the
 usual three \cite{ps2interface}.
@@ -608,8 +610,8 @@ and
 \noindent
 The QEMU PS/2 mouse device supports both of these extensions.
 
-There does not seem to be any current publication of the standard
-\cite{ps2interface}.
+%There does not seem to be any current publication of the standard
+%\cite{ps2interface}.
 
 \subsubsection{SPICE initialization}
 
@@ -765,6 +767,7 @@ member of the tablet interface.
     ]{spice-input.c}
 \end{codeblock}
 
+\noindent
 The \emph{tablet\_position} queues the absolute input for both axes and issues
 the event sync.
 
@@ -852,7 +855,7 @@ struct.
     \lstinputlisting[
         caption=ps2.c,
         language=C,
-        linerange={1091-1112,1114-1126}
+        linerange={1091-1112,1234-1256}
     ]{ps2-new.c}
 \end{codeblock}
 
@@ -882,7 +885,11 @@ function.
 \end{codeblock}
 
 
+\subsection{Tying it all together}
 
+% website about how to install everything
 
-% TODO poprawić conclusion/further works
-
+Following the process of installation and using the modified QEMU version allows
+to use PenPoint OS SDK version with a graphics tablet and stylus.  A detailed
+step-by-step guide and all of the necessary files are available on my website at
+\url{khnsky.github.io/qemu-penpointos/}

@@ -85,11 +85,11 @@ hardware and provides a DOS environment. This kind of approach can provide
 better compatibility but is less flexible. Using these types of tools is
 a great starting point in the project of archiving software. In fact the
 archive.org organisation provides a Windows 95 environment that runs inside
-a browser and is available on the organisation's website by using a slightly
-modified version of DOSBox compiled using Emscripten, a compiler that allows
-compiling C or C++ software for browsers. However, it is not enough, none of
-these tools was built with long term digital preservation in mind
-\cite{hoeven2007}.
+a browser and is available on the organisation's website \cite{win95web} by
+using a slightly modified version of DOSBox compiled using Emscripten,
+a compiler that allows compiling C or C++ software for browsers. However, it is
+not enough, none of these tools was built with long term digital preservation
+in mind \cite{hoeven2007}.
 
 \subsection{What is PenPoint OS}
 
@@ -99,10 +99,11 @@ a device with the functionality of a computer that could be used on the move.
 They noticed that laptops, although touted as mobile, were actually just
 movable desktop computers. What they had in mind were devices that did not have
 to be set up on a desk or a lap, but one you could take from meeting to meeting
-without any hassle or even operate with one hand and holding it with the other
-while walking \cite{carr1991}. Something like today's smartphone but in many ways
-different. They understood that such a computer could not be just a smaller
-lighter PC but designed from the ground up with these requirements in mind.
+\cite{startupadv} without any hassle or even operate with one hand and holding
+it with the other while walking \cite{carr1991}. Something like today's
+smartphone but in many ways different. They understood that such a computer
+could not be just a smaller lighter PC but designed from the ground up with
+these requirements in mind.
 
 \subsection{Brilliance of PenPoint}
 PenPoint is built around three main ideas: the Notebook User Interface (NUI)
@@ -155,12 +156,12 @@ you can ``pin'' things there as on a cork board. It is turned off by default.
 
 In Embedded Document Architecture every file is also equivalent to an instance
 of a program. Clicking a page opens up the file in the associated application,
-there is no distinction between them. There is no notion of saving or loading,
-everything is always ready to go. This is what a document is in PenPoint
-\cite{carr1991} \cite{brown1992}. But a more important and impressive aspect of
-EDA is the ``embedded'' part. In PenPoint every document has the ability to
-embed every other document, and this nesting can go as far as the hardware is
-capable of. This goes from simple stuff like writing pads
+there is no distinction between them. There is no notion of saving or loading
+\cite{startupadv}, everything is always ready to go. This is what a document is
+in PenPoint \cite{carr1991} \cite{brown1992}. But a more important and
+impressive aspect of EDA is the ``embedded'' part. In PenPoint every document
+has the ability to embed every other document, and this nesting can go as far
+as the hardware is capable of. This goes from simple stuff like writing pads
 \ref{fig:embedded-document-architecture} - areas that are used for text input,
 that could be of different sizes, floating or docked, with input fields
 separated into cells or continuous, or signature pads - to things like
@@ -199,14 +200,14 @@ was present again \cite{carr1991} \cite{brown1993}.
 Although I would consider them to be a part of NUI gestures \ref{fig:gestures}
 deserve special attention. What made them so powerful is the fact that
 a gesture specifies both the target and the command given - crossing out a word
-applies the delete operation on that word. Because of this it was important to
-provide a lot of gestures and make them work seamlessly. Gestures and their
-recognition were implemented on a system level but it was up to the program to
-interpret a gesture and act on it. PenPoint provides about a dozen core
-gestures that work uniformly across all the apps with common commands, so
-a delete or edit gesture would work just as well on a word, a drawn object or
-a calendar entry.  Additionally, there are many more gestures that were
-application specific.
+applies the delete operation on that word, crossing out a shape deletes the
+shape. Because of this it was important to provide a lot of gestures and make
+them work seamlessly. Gestures and their recognition were implemented on
+a system level but it was up to the program to interpret a gesture and act on
+it. PenPoint provides about a dozen core gestures that work uniformly across
+all the apps with common commands, so a delete or edit gesture would work just
+as well on a word, a drawn object or a calendar entry.  Additionally, there are
+many more gestures that were application specific.
 
 \begin{figure}[!h]
     \centering \includegraphics[width=0.5\linewidth]{gestures.png}
