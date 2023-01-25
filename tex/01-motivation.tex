@@ -29,56 +29,55 @@ data and extend its lifetime. The problem with these is that most of such
 products are proprietary. Companies that create and provide support for them
 can go bankrupt, lose patents or stop providing the technology required for
 other reasons. Finally the digital resources are susceptible to events that
-would not affect properly stored physical heritage, like eg. a geomagnetic
+would not affect properly stored physical heritage, like e.g. a geomagnetic
 storm that could wipe digitally stored data but would not be dangerous to
 physical objects.
 
-Another consideration when it comes to digital materials is that they contain
+Another consideration, when it comes to digital materials, is that they contain
 only the ``immediate'' information while physical objects carry much more
-additional information that allows to study their context. The digital by
-itself carries only intended data: a book only offers the text, a movie,
-a picture, or a piece of music only provides what it has on its own. A physical
-book or an art piece offers much more: the materials can be studied, the
-texture or a font can be analysed. Inspecting a physical artefact makes it
-possible to discover its journey. This makes the process of authenticating and
-ensuring that a digital piece was not modified so difficult and so much
-different than a physical one. This is also why it is needed to keep a spurious
-amounts of metadata about digital objects.
+additional information that allows to study their context. The digital by itself
+carries only intended data: a book only offers the text, a movie, a picture, or
+a piece of music only provides what it has on its own. A physical book or an art
+piece offers much more: the materials can be studied, the texture or a font can
+be analysed. Inspecting a physical artefact makes it possible to discover its
+journey. This makes the process of authenticating and ensuring that a digital
+piece was not modified so difficult and so much different than a physical one.
+This is also why it is needed to keep a spurious amounts of metadata about
+digital objects.
 
-The difficulty with preserving digital records is even greater with data that
-is not ``static'' but rather ``interactive'' like software. Conversion from an
-older file format to a new one that has better support or is better equipped
-for use in archiving is infinitely less difficult of an endeavour than
-ensuring that a piece of software is operational over the years. In general
-there are two strategies to provide sustained accessibility to digital
-objects: migration and emulation \cite{hoeven2007}. Migration concerns the
-digital object itself in changing the object in such a way that it is possible
-to render the original object despite developments of the underlying software
-and hardware environment used for preservation. In the case of ``static'' data
-the migration would be to convert the files to a newer file format, whereas
-for a ``dynamic'' digital object it would have to be ported i.e. rewritten to be
-compatible with the newer software or hardware. That is almost always pretty
-much impossible when dealing with proprietary objects where the source code is
-missing, and when the source code is available it is still a monumental
-undertaking. Emulation on the other hand deals with changing the environment
-or providing a compatibility layer that would allow for sustained
-accessibility of the unchanged object by recreating an equivalent of its
-original environment.
+The difficulty with preserving digital records is even greater with data that is
+not ``static'', but rather ``interactive'', like software. Conversion from an
+older file format to a new one that has better support or is better equipped for
+use in archiving is infinitely less difficult an endeavour than ensuring that
+a piece of software is operational over the years. In general there are two
+strategies to provide sustained accessibility to digital objects: migration and
+emulation \cite{hoeven2007}. Migration concerns the digital object itself in
+changing the object in such a way that it is possible to render the original
+object despite developments of the underlying software and hardware environment
+used for preservation. In the case of ``static'' data the migration would be to
+convert the files to a newer file format, whereas for a ``dynamic'' digital
+object it would have to be ported i.e. rewritten to be compatible with the newer
+software or hardware. That is almost always pretty much impossible when dealing
+with proprietary objects where the source code is missing, and when the source
+code is available it is still a monumental undertaking. Emulation, on the other
+hand, deals with changing the environment or providing a compatibility layer
+that would allow for sustained accessibility of the unchanged object by
+recreating an equivalent of its original environment.
 
 Emulation in itself is a really complicated problem. It requires simulation of
 lots of ``moving parts'' and the system being emulated is often not well
 documented or not documented at all. This makes the process of creating an
 emulation environment a process of trial and error, and there is never
-a guarantee that something does not break because it dependent on some
+a guarantee that something does not break because it is dependent on some
 undocumented, undiscovered behavior. There are a few approaches to emulation.
-One is creating a ``thin'' compatibility layer, that is providing stubs for
+One is creating a ``thin'' compatibility layer, that is, providing stubs for
 missing pieces and adaptors for existing features that are different. Such
-a solution can work for example for running software created for the same or
-similar computer architecture but on a different operating system, it is what
-WiNE is doing to run Windows programs on Linux. Another approach is to simulate
+a solution can work, for example, for running software created for the same or
+similar computer architecture but on a different operating system - this is what
+Wine is doing to run Windows programs on Linux. Another approach is to simulate
 a complete computer. This is much more complex and demanding but allows for
 cross platform emulation - software and operating systems meant for one type of
-device and be run through emulation on a device with a completely different
+device can be run through emulation on a device with a completely different
 architecture. There are also solutions that combine emulation of hardware with
 emulation of the operating system, like DOSBox which both emulates computer
 hardware and provides a DOS environment. This kind of approach can provide
@@ -91,14 +90,14 @@ a compiler that allows compiling C or C++ software for browsers. However, it is
 not enough, none of these tools was built with long term digital preservation
 in mind \cite{hoeven2007}.
 
-\subsection{What is PenPoint OS}
+\subsection{What PenPoint OS is}
 
 Released in 1991 PenPoint was an operating system that was created with devices
 that were truly mobile in mind. The creators of PenPoint saw the need for
 a device with the functionality of a computer that could be used on the move.
 They noticed that laptops, although touted as mobile, were actually just
-movable desktop computers. What they had in mind were devices that did not have
-to be set up on a desk or a lap, but one you could take from meeting to meeting
+movable desktop computers. What they had in mind was a device that did not have
+to be set up on a desk or a lap, but one that you could take from meeting to meeting
 \cite{startupadv} without any hassle or even operate with one hand and holding
 it with the other while walking \cite{carr1991}. Something like today's
 smartphone but in many ways different. They understood that such a computer
@@ -133,7 +132,7 @@ that simulate tabs such as those in a three-ring binder, and an optional ``cork
 margin'' at the bottom \ref{fig:notebook-user-interface2}. The table of contents
 is where all user data is organised. Each document is presented as a page in
 the summary. Pages might also be grouped into sections, and sections can be
-nested as well which allows creation of hierarchies similar to directories and
+nested as well, which allows creation of hierarchies similar to directories and
 files. Each document is also analogous to a program, this is a part of the EDA.
 The tabs allow to jump instantly to a page or a section in the notebook.
 PenPoint also allows programs to use tabs for their internal navigation.
@@ -166,14 +165,14 @@ as the hardware is capable of. This goes from simple stuff like writing pads
 that could be of different sizes, floating or docked, with input fields
 separated into cells or continuous, or signature pads - to things like
 pluggable spellcheck or even to embedding a whole drawing program inside of
-a presentation for example.  EDA also allows to copy any and all objects from
+a presentation, for example.  EDA also allows to copy any and all objects from
 one document to another without any loss of quality or information
 \cite{carr1991} \cite{brown1993}. In PenPoint the gestures are global and
-present all throughout; however it is up to the ``surface'' gesture was issued
+present all throughout; however it is up to the ``surface'' the gesture was issued
 on to decide what it means. Inside a writing pad it is interpreted as a letter,
 whereas in a drawing document it could be either interpreted as a shape or an
 editing gesture: delete, select, etc. The embedding was not only a useful
-functionality but it also created a greater code reuse and thus lowered the
+functionality, but it also created a greater code reuse and thus lowered the
 hardware requirements.
 
 \begin{figure}[!h]
@@ -185,7 +184,7 @@ hardware requirements.
 The third main idea is the focus on connectivity. One of the goals of PenPoint
 was to be as compatible with different communication protocols as possible.
 This meant internet and email but also printers and faxes, it also included not
-having to restart the computer in order to connect to a new network which was
+having to restart the computer in order to connect to a new network, which was
 not always the case with other devices at the time. Being able to receive fax
 on a PenPoint device meant that it was possible to add freehand notes and
 drawings to the received image and resend it without any loss of quality, and
@@ -197,7 +196,7 @@ possible to write and ``send'' an email without a need for internet connection,
 with the system scheduling the message to be actually sent when the connection
 was present again \cite{carr1991} \cite{brown1993}.
 
-Although I would consider them to be a part of NUI gestures \ref{fig:gestures}
+Although I would consider them to be a part of NUI, gestures \ref{fig:gestures}
 deserve special attention. What made them so powerful is the fact that
 a gesture specifies both the target and the command given - crossing out a word
 applies the delete operation on that word, crossing out a shape deletes the
@@ -219,7 +218,7 @@ Nowadays there is lesser interest in a compelling user interface metaphor.
 Instead the metaphors encompass only a small portion of the whole, and the
 designs are becoming more self-referential - they rely on the familiarity with
 the previous versions or similar environments rather than something universal.
-Although a smartphone with a touch screen is probably the most popular device
+Although a smartphone with a touch screen is probably the most popular device,
 the use of gestures is minimal, other than simple swipes to go back and switch
 between applications, and the extremely powerful notion of target and command
 that a gesture provides is non-existent. Some applications, especially centred
@@ -231,14 +230,14 @@ because it is not supported on the system level. Features like unified inbox
 and delayed I/O are also missing from modern devices. Some programs have
 similar concepts but without inbuilt system support these functionalities just
 can not reach full potential, and even though a reliable connection is almost
-always available there is still 1\% of situations where delayed I/O would be
+always available, there is still 1\% of situations where delayed I/O would be
 incredibly useful.
 
 \subsection{PenPoint OS: Too great a vision}
 
 PenPoint OS failed. It did not become successful and today is mostly forgotten,
 even though a great deal of its original features are still used in today's
-operating systems, and many are still missing or unmatched in capability to
+operating systems, and many are still missing or unmatched in capability to the
 ones PenPoint offered. A large set of gestures that worked system-wide and
 ``press and hold'' for any selection, a dynamic layout toolkit which allowed
 applications to automatically rescale for portrait or landscape orientation,
@@ -256,7 +255,7 @@ Despite all of this PenPoint OS did not gain adoption. The biggest and most
 obvious problem was the hardware available at the time. Even though the
 developers employed many clever solutions and tricks that allowed PenPoint to
 operate on a variety of different computers and scale with the available
-resources the problem that could not be overcome was that the technology
+resources, the problem that could not be overcome was that the technology
 required just was not there back then - the screens were dim and low resolution,
 the latency was high and the handwriting recognition was not up to par. Even
 now, after over 30 years of rapid hardware evolution and incredible leaps in
@@ -267,20 +266,20 @@ feeling of pen and paper still feels superior.
 
 \subsection{Evolution of graphical interfaces: looking back to move forward}
 
-The advancements in graphical user interfaces seem to not be able to keep up
-with the ever growing complexities of the software. In fact apart from
-aesthetic stylistic changes there is not a lot of change at all, and in some
+The advancements in graphical user interfaces do not seem to be able to keep up
+with the ever growing complexities of the software. In fact, apart from
+aesthetic stylistic changes, there is not a lot of change at all, and in some
 aspects it could be argued that GUIs are regressing. The proceeding unification
 of interfaces across the web and desktop applications and computers, tablets,
 and smartphones makes it easier for developers to create new software and for
 the users to become familiar with it, but makes it impossible to use any of the
 domains to the fullest. In almost all cases a non-graphical or mix of graphical
-representation and non-graphical input provides greater possible speed. That's
+representation and non-graphical input provides greater possible speed. That is
 why many professionals still use text based interfaces or opt for workflows
 relying heavily on keyboard shortcuts. The advantages of graphical user
 interfaces used to be ease of use and discoverability. This, however, slowly
 begins to be less and less the case - with applications being more and more
-advanced and providing more and more features the cascading menus become more
+advanced and providing more and more features, the cascading menus become more
 and more crammed and overloaded, and thus less welcoming. The use of gestures
 had a little bit of a resurgence with the adoption of bigger touchpads and
 touch sensitive screens in laptops. These unfortunately often work only at

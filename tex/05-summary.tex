@@ -5,7 +5,7 @@
 
 The goal of this work was to run PenPoint OS on a modern computer with
 reasonable performance, and be able to use it with the help of a mouse,
-a graphics tablet or a touchscreen. PenPoint was an important and influential
+a graphics tablet or a touchscreen. PenPoint was an important and influential,
 albeit now mostly forgotten piece of computing history. It is important to
 preserve it and at the same time maybe gain a little insight.
 
@@ -23,13 +23,13 @@ preserve it and at the same time maybe gain a little insight.
 The first approach consisted of trying to port modifications of the JPC
 emulator created by professor Simon Schubiger to the QEMU hypervisor.  The JPC
 emulator was not performant enough to run PenPoint OS at a speed that would be
-comfortable to use.  First the changes to the JPC emulator required to run
+comfortable to use.  First, the changes to the JPC emulator required to run
 PenPoint were discussed in detail: what they do, how they do it, and how all of
 this relates to the general architecture of the JPC.  Then the operation of the
 QEMU hypervisor, the process of defining a new device in the QEMU source tree
 and making it available to QEMU, and the reasoning behind choosing QEMU were
-described in depth.  This approach however was abandoned because it was deemed
-unnecessarily complex, and outside of the scope of this work.  Instead a more
+described in depth.  This approach, however, was abandoned because it was deemed
+unnecessarily complex, and outside of the scope of this work.  Instead, a more
 straightforward and less error prone solution was chosen.
 
 \begin{figure}[!h]
@@ -39,10 +39,10 @@ straightforward and less error prone solution was chosen.
     \label{fig:penpoint-pc-tablet}
 \end{figure}
 
-In the second approach a different distribution of PenPoint OS was used, one
+In the second approach, a different distribution of PenPoint OS was used, one
 that was created so that it could be installed on a PC running MS-DOS.  Here the
 process of obtaining the installation files, the installation, and configuration
-of the DOS environment created using FreeDOS, and of PenPoint is described.
+of the DOS environment created using FreeDOS, and of PenPoint was described.
 First it was described how the SDK distribution of PenPoint differs from the
 version created for the NCR 3125.  Then it was shown how the floppy disk files
 ought to be prepared to be used with a virtual machine, and the process of
@@ -80,9 +80,9 @@ installing it on FreeDOS in a modified version of QEMU.
 %all of its bells and whistles.
 
 Potential improvements include creating a QEMU device that would represent
-a graphical tablet from the era.  This would not change the functionality of the
+a graphical tablet from the era.  This would not change the functionality
 of the solution but it would be more `authentic' and complete.  Modifying QEMU
-to run the NCR 3125 version of PenPoint instead of the developer version could
+to run the NCR 3125 version of PenPoint, instead of the developer version, could
 also prove beneficial, as it was the flagship PenPoint device that offered THE
 experience that creators of PenPoint intended.  It could also be useful to use
 outside of PenPoint of other software that was created for System 3125.

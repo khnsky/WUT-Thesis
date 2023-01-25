@@ -5,7 +5,7 @@
 In this second part I will explain what FreeDOS and PenPoint OS SDK are, and how
 to install and run the PenPoint OS version intended for developers. Using this
 version of PenPoint OS was made possible after one of the commenters on
-professor Schubiger original PenPoint OS video found the installation media
+professor Schubiger's original PenPoint OS video found the installation media
 files hosted on a site dedicated to archiving computer history.
 
 In these following sections I will outline the steps to installing the
@@ -29,7 +29,7 @@ compatible desktop PCs running MS-DOS.
 FreeDOS is a free and libre open source operating system licensed under GPL. It
 is intended to be fully compatible with MS-DOS environment and is designed to
 run well in a virtual machine. FreeDOS has a thriving community. There is
-original development of new software, and there programs ported from other
+original development of new software, and there are programs ported from other
 platforms. And everything is well documented.  FreeDOS is easier to use and
 much more accessible than the original DOS.  There is even a package manager.
 All of those reasons make it a good pick to use for the purposes of running
@@ -39,17 +39,17 @@ PenPoint OS.
 
 After downloading the files from the bitsavers website the eight floppy disk
 images need to be converted in order for them to be used. The .IMD files were
-created using a DOS program ImageDisk used to backup floppies. These however
-cannot be used with QEMU as the format is not supported. In order for them to
-be readable to QEMU these must be converted to .img files. This can be done
+created using a DOS program ImageDisk used to backup floppies. These, however,
+cannot be used with QEMU, as the format is not supported. In order for them to
+be readable to QEMU, these must be converted to .img files. This can be done
 using any program that supports converting .IMD files to .img files.
 
 \subsection{Installing PenPoint OS on FreeDOS}
 
 After installing FreeDOS in a virtual machine and converting the ImageDisk
-files to .img, now it is the time to install PenPoint OS. In order to do so
+files to .img, now it is the time to install PenPoint OS. In order to do so,
 a floppy device must be added to the VM configuration. Here the file DISK1.img
-must be used as source. Inside FreeDOS inserted floppy will be available as A:
+must be used as source. Inside FreeDOS the inserted floppy will be available as A:
 drive. To access another drive simply type its name. Finally to run the
 installation execute install.exe \ref{fig:fd-main-screen}.
 
@@ -83,7 +83,7 @@ eight disks are installed.
     \label{fig:penpoint-installation}
 \end{figure}
 
-Just before the installation wizard closes it informs that additional user
+Just before the installation wizard closes, it informs that additional user
 configuration will be required before running PenPoint OS will be possible. It
 tries to create or modify an existing \emph{CONFIG.SYS} file with a directive
 \emph{FILES=20} and creates a new file called AUTOEXEC.NEW that has to be
@@ -116,7 +116,7 @@ is a regular batch file that is automatically run after startup. The contents
 of the \emph{AUTOEXEC.NEW} file are simply commands setting the environmental
 variables used by PenPoint with paths from installation. These can be just
 copied at the top of the \emph{FDAUTO.BAT} \ref{fig:fd-config}. It might be
-useful to remember not to overwrite the \emph{PATH} variable but instead to
+useful to remember not to overwrite the \emph{PATH} variable, but instead to
 prepend the PenPoint value so that executables bundled with FreeDOS can still
 be found.
 
@@ -136,12 +136,12 @@ Now we can try running PenPoint.
 %\textbackslash{}PENPOINT\textbackslash{}SDK\textbackslash{}UTIL\\
 %\textbackslash{}DOS\textbackslash{}GO.BAT\\
 %} \\
-Now that the installation is complete to run PenPoint a script
+Now that the installation is complete, to run PenPoint, a script
 
 \Verb[fontshape=it]|\PENPOINT\SDK\UTIL\DOS\GO.BAT|
 
 \noindent
-should be used. Here however we encounter the first problem. PenPoint does not
+should be used. Here, however, we encounter the first problem. PenPoint does not
 start, instead it crashes with a JemmEx exception \ref{fig:jemmex}.
 
 \begin{figure}[H]
@@ -151,18 +151,18 @@ start, instead it crashes with a JemmEx exception \ref{fig:jemmex}.
     \label{fig:jemmex}
 \end{figure}
 
-After trying a few things it turns out that this issue does not occur if FreeDOS
+After trying a few things, it turns out that this issue does not occur if FreeDOS
 was booted in safe mode - one of the booting options defined in
-\emph{FDCONF.SYS}. As it turns out JemmEx is in fact not loaded this way.
+\emph{FDCONF.SYS}. As it turns out JemmEx, is in fact not loaded this way.
 JemmEx is an Expanded Memory Manager. Expanded Memory was a workaround for 8088
-and 8086 CPUs that allowed using the Upper Memory, that is between 640K and 1M
-to address memory beyond 1M. Extended Memory on the other hand refers to memory
+and 8086 CPUs that allowed using the Upper Memory, that is, between 640K and 1M
+to address memory beyond 1M. Extended Memory on the other hand, refers to memory
 beyond the 1M on 286 and newer processors which could address this memory
 normally. PenPoint OS does not support Expanded Memory and only works on Extended
 Memory \cite{godevtools}.
 
-Now after removing loading JemmEx from startup PenPoint OS starts. However there
-is another problem. After some loading a broken pen and a number 1000 appears,
+Now, after removing loading JemmEx from startup, PenPoint OS starts. However, there
+is another problem. After some loading, a broken pen and a number 1000 appears,
 and the initialisation hangs \ref{fig:broken-pen}.
 
 \begin{figure}[H]
@@ -172,7 +172,7 @@ and the initialisation hangs \ref{fig:broken-pen}.
     \label{fig:broken-pen}
 \end{figure}
 
-The error 1000 according to the ``Pen Point Development Tools'' book means that
+The error 1000, according to the ``Pen Point Development Tools'' book, means that
 no pointing device was enabled in the \emph{MIL.INI} file \cite{godevtools}.
 After uncommenting the line that enables PS2 mouse support in \emph{MIL.INI}
 \ref{fig:mil-ini}, PenPoint OS boots correctly \ref{fig:penpoint-mainscreen}.
@@ -195,15 +195,15 @@ After uncommenting the line that enables PS2 mouse support in \emph{MIL.INI}
 
 \subsection{Using a graphics tablet to point}
 
-Now PenPoint is running and working correctly with a mouse.  Unfortunately just
+Now PenPoint is running and working correctly with a mouse.  Unfortunately, just
 because a mouse is working does not mean that other pointing devices will work
-as well.  For example a mouse and a graphics tablet used with a finger work
+as well.  For example, a mouse and a graphics tablet used with a finger work
 without issue, but using a stylus is unwieldy.  Instead of moving with the pen
 on the tablet, the pointer behaves more like a joystick - when the stylus is in
-the middle of the tablet the pointer is stationary but when stylus is moved off
-centre then the pointer moves in that direction, and the farther the stylus is
+the middle of the tablet, the pointer is stationary but when stylus is moved off
+centre, then the pointer moves in that direction, and the farther the stylus is
 from the centre the faster it moves.  All of this happens because a mouse or
-a finger movement on a tablet is a relative movement - the mouse moves by some
+a finger movement on a tablet is a relative movement - if the mouse moves by some
 distance in a direction then the pointer should also move by that distance in
 that direction, a stylus or a touchscreen, on the other hand, use absolute
 movement - the stylus touches one corner of the tablet, the pointer should be
@@ -308,18 +308,18 @@ QEMU supports using tablet as a pointing device but it does not work in FreeDOS
 because QEMU only provides a generic Human Interface Device (HID) driver.  The
 USB-HID specification is a standard that allows for many different input and
 output devices to communicate with the computer without any additional software.
-For the QEMU HID device to work however it must be initialised by the operating
+For the QEMU HID device to work, however, it must be initialised by the operating
 system.  DOS obviously came long before HID standard was created, and so it is
 not supported by FreeDOS.
 
-In this section I will describe the process of making the tablet behave as the
+In this section, I will describe the process of making the tablet behave as the
 pointing device in the expected way inside FreeDOS on QEMU.
 
 \subsection{Creating testing environment}
 
 % używanie qemu bez trzymanki trudne
 
-QEMU is extremely feature rich.  This is a great advantage, however it makes
+QEMU is extremely feature rich.  This is a great advantage; however, it makes
 using, tuning configuring it pretty cumbersome, especially since QEMU by itself
 only provides console arguments as a way to specify settings.
 
@@ -333,13 +333,13 @@ and hypervisors, but also containers and network interfaces.  The pieces of
 software that make up libvirt are a stable C API, a libvirtd daemon, and
 a command line client virsh.
 
-But virsh is not the only client.  The way libvirt operates anyone can use the
-API to communicate with the daemon in their client.  Apart from virsh GOME
+But virsh is not the only client.  The way libvirt operates, anyone can use the
+API to communicate with the daemon in their client.  Apart from virsh, GOME
 provides its own libvirt client - GOME Boxes - that matches the rest of their
 environment, and there also exist an add-on to cockpit - the web-based server
 administration tool.  I used virt-manager.
 
-Here comes the problem however: although virt-manager proved to be great for
+Here comes the problem, however: although virt-manager proved to be great for
 configuring amounts of memory, number of cores and adding peripherals, it does
 not allow a way to change the path of the used QEMU executable, and overwriting
 an executable provided and managed by the distribution's package manager is
@@ -352,7 +352,7 @@ something that could lead to serious issues.
 % sprawdzanie logów: zrzut
 
 My first thought was to somehow find out the exact way that virt-manager
-executes the QEMU binary, that is the command line parameters and maybe the
+executes the QEMU binary, that is, the command line parameters and maybe the
 environment.  It turns out that every guest configuration is stored in xml
 format in something called the domain.  It also turns out that the virsh command
 line libvirt client has the ability to convert that xml to equivalent shell
@@ -382,13 +382,13 @@ invocation.
     ]{virsh-domxml-to-native.sh}
 \end{codeblock}
 
-This however still did not work.  At the very least many of the paths for files
+This, however, still did not work.  At the very least many of the paths for files
 and directories that it used for example in the \lstinline{/var/lib/libvirt} are
 dynamically created at runtime.  I tried copying them and adjusting the startup
 script accordingly but it still would not cooperate.  This clearly was not the
 right approach.
 
-How about modifying the domain xml directly?  Fortunately virsh allows to do
+How about modifying the domain xml directly?  Fortunately, virsh allows to do
 this using the \emph{edit} command.
 
 \begin{codeblock}
@@ -427,13 +427,13 @@ Especially interesting is the line containing the \emph{emulator} tag.
 \end{codeblock}
 
 \noindent
-According to libvirt documentation \cite{libvirt} the \emph{emulator} element
+According to libvirt documentation \cite{libvirt}, the \emph{emulator} element
 specifies the fully qualified path to the emulator binary.
 
 With this knowledge I was able to clone the QEMU virtual machine which had
 FreeDOS with PenPoint SDK installed and change the binary that was used for
 emulation to the one supplied by me.  This way I could have two virtual machines
-that differed only in the QEMU binary they used which was useful as
+that differed only in the QEMU binary they used, which was useful as
 a comparison.
 
 \subsection{Building QEMU} %?
@@ -443,7 +443,7 @@ a comparison.
 % make depends
 % brak spice-protocol
 
-When using QEMU in conjunction with other tools like libvirt it is important
+When using QEMU in conjunction with other tools like libvirt, it is important
 that it is built with all the required functionality.  QEMU uses
 a \emph{configure} script to determine local build environment characteristic.
 %One way to increase the build speed is to configure the build environment to
@@ -458,9 +458,8 @@ a \emph{configure} script to determine local build environment characteristic.
     ]
         ../configure \
             --target-list=x86_64-softmmu \
-            --sysconfdir=/etc --localstatedir=/var \
-            --libexecdir=/usr/lib/qemu --smbd=/usr/bin/smbd \
-            --enable-modules --enable-sdl --disable-werror
+            --enable-modules \
+            --disable-werror
     \end{lstlisting}
 \end{codeblock}
 
@@ -468,10 +467,10 @@ The \emph{virsh edit} command verifies correctness of the modified domain
 configuration.  In my case it was able to detect that the newly built QEMU
 binary was missing support for SPICE which virt-manager used for display and
 input to that virtual machine, and I was able to fix it by installing a required
-package.  A good way to find out how QEMU must be configured and its
-dependencies is to inspect how a package for specified system is built.  On Arch
-Linux one can easily read \emph{PKGBUILD} - a file describing the build process
-- for \emph{qemu-git} package on Arch User Repository.
+package.  A good way to find out how QEMU must be configured and what are its
+build dependencies is to inspect how a package for specified system is built.
+On Arch Linux one can easily read \emph{PKGBUILD} - a file describing the build
+process - for \emph{qemu-git} package on Arch User Repository.
 
 \subsection{Changes to QEMU source code}
 
@@ -483,28 +482,28 @@ Linux one can easily read \emph{PKGBUILD} - a file describing the build process
 % w moim przypadku dostaje info z ui/spice
 % kod ps2
 
-Although PenPoint supports multiple tablet devices, and even provides an option
-to define a communication protocol for unsupported one \cite{godevtools}, I was
+Although PenPoint supports multiple tablet devices and even provides an option
+to define a communication protocol for an unsupported one \cite{godevtools}, I was
 not able to find any information about graphical tablets from that time, much
 less technical documentation that would be needed to create emulated version.
 
-This however is not necessary.  Instead of creating a new device, a device that
-is already present in QEMU and whose protocol is well supported - the PS/2 mouse
-- can be used.  That is how Synaptic touchpad worked: when Synaptic drives that
-supported absolute mode were not present the touchpad identified itself as
+This, however, is not necessary.  Instead of creating a new device, a device
+which is already present in QEMU and whose protocol is well supported - the PS/2
+mouse - can be used.  That is how Synaptic touchpad worked: when Synaptic drives
+that supported absolute mode were not present, the touchpad identified itself as
 a mouse and used either PS/2, Serial or Apple Desktop Bus protocols
 \cite{synapticsinterfacing}.
 
 \subsubsection{PS/2 protocol}
 
-Although the PS/2 protocol was introduced by IBM in 1987 the port was still
-present on most of the desktop motherboards sold until just few years ago.
+Although the PS/2 protocol was introduced by IBM in 1987, the port was still
+present on most of the desktop motherboards sold until just a few years ago.
 Over the years many extensions of the standard were created by the likes of
 Logitech or Microsoft.
 
-One such popular extensions is the Microsoft Intellimouse extensions which
-allowed for use of scroll wheel or scroll wheel and five buttons instead of the
-usual three \cite{ps2interface}.
+One such popular extension is the Microsoft Intellimouse extension which
+allowed for use of a scroll wheel or a scroll wheel and five buttons, instead of
+the usual three \cite{ps2interface}.
 
 Normally the PS/2 mouse sends information about its movement in a packet of
 three bytes \ref{table:ps2packet3b}.
@@ -536,9 +535,9 @@ three bytes \ref{table:ps2packet3b}.
 \end{table}
 
 \noindent
-In order to enable the Intellimouse extensions the mouse sends a sequence of
+In order to enable the Intellimouse extension the mouse sends a sequence of
 three `Set sample rate' commands with predefined magic values.  A driver
-compatible with that extension replies by issuing a `Get device ID' command to
+compatible with that extension replies by issuing a `Get device ID' command, to
 which the mouse will respond with ID of 0x03.  Now both devices switch to using
 four byte packets \ref{table:imps2scroll} \ref{table:imps25buttons}.
 
@@ -620,7 +619,7 @@ virtual environments, on the same computer or anywhere on the internet.  It is
 comprised of the SPICE protocol, server, and several client implementations are
 available.  The \emph{virt-manager} program uses either SPICE or VNC to provide
 display and pointer input, and QEMU is compatible also with other sources.  The
-description of SPICE is ilustratory. % TODO
+description of SPICE is illustratory. % TODO
 
 QEMU defines a SPICE module.
 
@@ -774,7 +773,7 @@ the event sync.
 The \emph{qemu\_input\_queue\_abs} scales the input value and sends the event.
 The \emph{qemu\_input\_send\_event} function performs some checks and calls the
 \emph{replay\_input\_event}, which adds the event to replay if in replay mode,
-and otherwise it calls the \emph{qemu\_input\_send\_event\_impl}.  Finally this
+and otherwise it calls the \emph{qemu\_input\_send\_event\_impl}.  Finally, this
 function finds an appropriate input handler and calls its event callback.
 
 \begin{codeblock}
@@ -796,18 +795,18 @@ function finds an appropriate input handler and calls its event callback.
 \end{codeblock}
 
 \noindent
-The event sync functionality is implemented similarly ending in calling the
+The event sync functionality is implemented similarly, ending in calling the
 input handler callback for syncing.
 
 \subsubsection{Emulation of absolute input using PS/2 mouse device}
 
-Because the PS/2 mouse protocol uses relative pointer mode - that is it
+Because the PS/2 mouse protocol uses relative pointer mode - that is, it
 transfers by how much the mouse moved from the last position - and a tablet
-provides values in absolute mode - that is it reports the current absolute
+provides values in absolute mode - that is, it reports the current absolute
 stylus position - the absolute mode values must be converted to relative terms
-somehow.  To do so the mouse device structure should hold the last known
+somehow.  To do so, the mouse device structure should hold the last known
 absolute position.  Whenever an event occurs the last known absolute position
-would be updated, and when handling an event with absolute movement the position
+would be updated, and when handling an event with absolute movement, the position
 difference could be calculated and communicated using the standard PS/2
 protocol.
 
@@ -872,7 +871,7 @@ movement are sent to the PS/2 mouse input handler \emph{event} function.
     ]{ps2-new.c}
 \end{codeblock}
 
-Finally the code that updates the current known absolute position, and
+Finally, the code that updates the current known absolute position, and
 calculates the absolute movement deltas is added to the \emph{ps2\_mouse\_event}
 function.
 
